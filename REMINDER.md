@@ -10,7 +10,7 @@
 - [x] [567. Permutation in String](https://leetcode.com/problems/permutation-in-string/description/) (27.12)
 - [x] [643. Maximum Average Subarray I](https://leetcode.com/problems/maximum-average-subarray-i/description/) (27.12)
 - [x] [904. Fruit Into Baskets](https://leetcode.com/problems/fruit-into-baskets/description/)
-- [ ] [1004. Max Consecutive Ones III](https://leetcode.com/problems/max-consecutive-ones-iii/description/)
+- [x] [1004. Max Consecutive Ones III](https://leetcode.com/problems/max-consecutive-ones-iii/description/)
 - [ ] [1493. Longest Subarray of 1's After Deleting One Element](https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/description/)
 
 ## two-pointers
