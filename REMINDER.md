@@ -17,9 +17,9 @@
 
 - [x] [11. Container With Most Water](https://leetcode.com/problems/container-with-most-water/description/) (28.12)
 - [x] [15. 3Sum](https://leetcode.com/problems/3sum/description/) (28.12)
-- [ ] [26. Remove Duplicates from Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/)
-- [ ] [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/description/)
-- [ ] [125. Valid Palindrome](https://leetcode.com/problems/valid-palindrome/description/)
+- [x] [26. Remove Duplicates from Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/) (28.12 !!!)
+- [x] [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/description/) (28.12)
+- [x] [125. Valid Palindrome](https://leetcode.com/problems/valid-palindrome/description/) (28.12)
 - [ ] [167. Two Sum II - Input Array Is Sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/)
 - [ ] [283. Move Zeroes](https://leetcode.com/problems/move-zeroes/description/)
 - [ ] [329. Longest Increasing Path in a Matrix](https://leetcode.com/problems/longest-increasing-path-in-a-matrix/description/)
