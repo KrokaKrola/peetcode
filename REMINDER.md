@@ -15,8 +15,8 @@
 
 ## two-pointers
 
-- [ ] [11. Container With Most Water](https://leetcode.com/problems/container-with-most-water/description/)
-- [ ] [15. 3Sum](https://leetcode.com/problems/3sum/description/)
+- [x] [11. Container With Most Water](https://leetcode.com/problems/container-with-most-water/description/) (28.12)
+- [x] [15. 3Sum](https://leetcode.com/problems/3sum/description/) (28.12)
 - [ ] [26. Remove Duplicates from Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/)
 - [ ] [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/description/)
 - [ ] [125. Valid Palindrome](https://leetcode.com/problems/valid-palindrome/description/)
