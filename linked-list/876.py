@@ -37,3 +37,21 @@ class Solution:
             fast = fast.next.next
 
         return slow
+
+    def middleNode2(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        fast = head
+
+        while fast and fast.next:
+            fast = fast.next.next
+            head = head.next
+
+        return head
+
+
+node_1_4 = ListNode(5)
+node_1_3 = ListNode(4, node_1_4)
+node_1_2 = ListNode(3, node_1_3)
+node_1_1 = ListNode(2, node_1_2)
+node_1_0 = ListNode(1, node_1_1)
+res1 = Solution().middleNode2(node_1_0)
+print("after ", res1)
