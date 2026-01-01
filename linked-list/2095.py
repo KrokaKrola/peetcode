@@ -15,6 +15,20 @@ class ListNode:
         return " -> ".join(values)
 
 
+def build_list(values: list) -> Optional[ListNode]:
+    if not values:
+        return None
+
+    head = ListNode(values[0])
+    current = head
+
+    for val in values[1:]:
+        current.next = ListNode(val)
+        current = current.next
+
+    return head
+
+
 class Solution:
     def deleteMiddle(self, head: Optional[ListNode]) -> Optional[ListNode]:
         prev = ListNode(0, head)
@@ -29,15 +43,31 @@ class Solution:
 
         return prev.next
 
+    def deleteMiddle2(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head.next:
+            return None
+
+        slow = head
+        fast = head.next.next
+
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+
+        slow.next = slow.next.next
+
+        return head
+
 
 # =========================
-node_1_6 = ListNode(6)
-node_1_5 = ListNode(2, node_1_6)
-node_1_4 = ListNode(1, node_1_5)
-node_1_3 = ListNode(7, node_1_4)
-node_1_2 = ListNode(4, node_1_3)
-node_1_1 = ListNode(3, node_1_2)
-node_1_0 = ListNode(1, node_1_1)
-print("before", node_1_0)
-res1 = Solution().deleteMiddle(node_1_0)
-print("after ", res1)
+l1 = build_list([1, 3, 4, 7, 1, 2, 6])
+print("before", l1)
+l1 = Solution().deleteMiddle2(l1)
+print("after ", l1)
+print("---------")
+
+l2 = build_list([1])
+print("before", l2)
+l2 = Solution().deleteMiddle2(l2)
+print("after ", l2)
+print("---------")
