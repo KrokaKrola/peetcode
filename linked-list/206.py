@@ -38,17 +38,36 @@ def reverseList2(head: Optional[ListNode]) -> Optional[ListNode]:
     return prev
 
 
-# =========================
-node_1_3 = ListNode(3)
-node_1_2 = ListNode(2, node_1_3)
-node_1_1 = ListNode(1, node_1_2)
-print("before reverse", node_1_1)
-res1 = reverseList2(node_1_1)
-print("after reverse", res1)
+def reverseList3(head: Optional[ListNode]) -> Optional[ListNode]:
+    prev = None
+
+    while head:
+        temp = head.next
+        head.next = prev
+        prev = head
+        head = temp
+
+    return prev
+
 
 # =========================
-node_2_2 = ListNode(2)
-node_2_1 = ListNode(1, node_2_2)
-print("before reverse", node_2_1)
-res2 = reverseList2(node_2_1)
-print("after reverse", res2)
+# node_1_3 = ListNode(3)
+# node_1_2 = ListNode(2, node_1_3)
+# node_1_1 = ListNode(1, node_1_2)
+# print("before reverse", node_1_1)
+# res1 = reverseList2(node_1_1)
+# print("after reverse", res1)
+
+# =========================
+# node_2_2 = ListNode(2)
+# node_2_1 = ListNode(1, node_2_2)
+# print("before reverse", node_2_1)
+# res2 = reverseList2(node_2_1)
+# print("after reverse", res2)
+
+# =========================
+node_3_2 = ListNode(2)
+node_3_1 = ListNode(1, node_3_2)
+print("before reverse", node_3_1)
+res3 = reverseList3(node_3_1)
+print("after reverse", res3)
