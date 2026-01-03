@@ -1,7 +1,7 @@
 class MyHashMap:
     """
     Hash Map implementation using Open Addressing (Linear Probing).
-    
+
     Instead of storing collisions in linked lists, we probe for the next
     available slot in the array when a collision occurs.
     """
@@ -28,7 +28,7 @@ class MyHashMap:
             # Found the key
             if self.keys[index] == key:
                 return index
-            
+
             # Track first deleted slot we encounter
             if self.keys[index] is self.DELETED and first_deleted == -1:
                 first_deleted = index
@@ -70,9 +70,9 @@ class MyHashMap:
 obj = MyHashMap()
 obj.put(1, 1)
 obj.put(2, 2)
-print(obj.get(1))   # 1
-print(obj.get(3))   # -1
+print(obj.get(1))  # 1
+print(obj.get(3))  # -1
 obj.put(2, 1)
-print(obj.get(2))   # 1
+print(obj.get(2))  # 1
 obj.remove(2)
-print(obj.get(2))   # -1
+print(obj.get(2))  # -1
