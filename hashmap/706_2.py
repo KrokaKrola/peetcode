@@ -6,48 +6,40 @@ class MyHashMap:
     available slot in the array when a collision occurs.
     """
 
+    EMPTY = -1
+    DELETED = -2
+
     def __init__(self):
-        self.size = 2069  # Prime number for better distribution
-        self.keys = [None] * self.size
-        self.values = [None] * self.size
-        # We use a special marker for deleted slots
-        self.DELETED = object()
+        # Larger prime to keep load factor low (10^4 operations max)
+        self.size = 10007
+        self.keys = [self.EMPTY] * self.size
+        self.values = [0] * self.size
 
     def _hash(self, key: int) -> int:
         return key % self.size
 
-    def _probe(self, key: int) -> int:
-        """
-        Find the index where key is or should be stored.
-        Uses linear probing: if slot is taken, check next slot.
-        """
+    def put(self, key: int, value: int) -> None:
         index = self._hash(key)
-        first_deleted = -1  # Track first deleted slot for insertion optimization
+        first_deleted = -1
 
-        while self.keys[index] is not None:
-            # Found the key
+        while self.keys[index] != self.EMPTY:
             if self.keys[index] == key:
-                return index
-
-            # Track first deleted slot we encounter
-            if self.keys[index] is self.DELETED and first_deleted == -1:
+                self.values[index] = value
+                return
+            if self.keys[index] == self.DELETED and first_deleted == -1:
                 first_deleted = index
-
-            # Linear probing: move to next slot
             index = (index + 1) % self.size
 
-        # Key not found - return first deleted slot if available, else empty slot
-        return first_deleted if first_deleted != -1 else index
-
-    def put(self, key: int, value: int) -> None:
-        index = self._probe(key)
+        # Use first deleted slot if found, otherwise use empty slot
+        if first_deleted != -1:
+            index = first_deleted
         self.keys[index] = key
         self.values[index] = value
 
     def get(self, key: int) -> int:
         index = self._hash(key)
 
-        while self.keys[index] is not None:
+        while self.keys[index] != self.EMPTY:
             if self.keys[index] == key:
                 return self.values[index]
             index = (index + 1) % self.size
@@ -57,11 +49,9 @@ class MyHashMap:
     def remove(self, key: int) -> None:
         index = self._hash(key)
 
-        while self.keys[index] is not None:
+        while self.keys[index] != self.EMPTY:
             if self.keys[index] == key:
-                # Mark as deleted (can't just set to None - would break probing)
                 self.keys[index] = self.DELETED
-                self.values[index] = None
                 return
             index = (index + 1) % self.size
 
