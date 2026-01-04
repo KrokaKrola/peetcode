@@ -9,7 +9,7 @@
 - [x] [1343. Number of Sub-arrays of Size K and Average Greater than or Equal to Threshold](https://leetcode.com/problems/number-of-sub-arrays-of-size-k-and-average-greater-than-or-equal-to-threshold/description/)
 - [ ] [1456. Maximum Number of Vowels in a Substring of Given Length](https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/description/)
 - [ ] [1652. Defuse the Bomb](https://leetcode.com/problems/defuse-the-bomb/description/)
-- [ ] [2090. K Radius Subarray Averages](https://leetcode.com/problems/k-radius-subarray-averages/description/)
+- [x] [2090. K Radius Subarray Averages](https://leetcode.com/problems/k-radius-subarray-averages/description/)
 - [x] [2269. Find the K-Beauty of a Number](https://leetcode.com/problems/find-the-k-beauty-of-a-number/description/)
 
 ## two-pointers
