@@ -2,8 +2,8 @@
 
 ## sliding-window
 
-- [ ] [187. Repeated DNA Sequences](https://leetcode.com/problems/repeated-dna-sequences/description/)
-- [ ] [438. Find All Anagrams in a String](https://leetcode.com/problems/find-all-anagrams-in-a-string/description/)
+- [x] [187. Repeated DNA Sequences](https://leetcode.com/problems/repeated-dna-sequences/description/)
+- [x] [438. Find All Anagrams in a String](https://leetcode.com/problems/find-all-anagrams-in-a-string/description/)
 - [ ] [485. Max Consecutive Ones](https://leetcode.com/problems/max-consecutive-ones/description/)
 - [ ] [594. Longest Harmonious Subsequence](https://leetcode.com/problems/longest-harmonious-subsequence/description/)
 - [ ] [1176. Diet Plan Performance](https://leetcode.com/problems/diet-plan-performance/description/)
