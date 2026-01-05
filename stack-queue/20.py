@@ -14,10 +14,7 @@ class Solution:
                 if m[prev] != el:
                     return False
 
-        if stack:
-            return False
-
-        return True
+        return len(stack) == 0
 
 
 print(Solution().isValid("()"))
