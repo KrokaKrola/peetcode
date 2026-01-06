@@ -1,5 +1,5 @@
 class Solution:
-    def simplifyPath(self, path: str) -> str:
+    def simplifyPath2(self, path: str) -> str:
         stack = []
         parts = path.split("/")
 
@@ -10,6 +10,21 @@ class Solution:
                 stack.append(part)
 
         return "/" + "/".join(stack)
+
+    def simplifyPath(self, path: str) -> str:
+        result = []
+
+        for part in path.split("/"):
+            if part == "":
+                continue
+
+            if part == ".." and result:
+                result.pop()
+            else:
+                if part != "." and part != "..":
+                    result.append(part)
+
+        return "/" + "/".join(result)
 
 
 print(Solution().simplifyPath("/home/"))
