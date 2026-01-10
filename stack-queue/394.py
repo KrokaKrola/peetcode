@@ -1,36 +1,28 @@
 class Solution:
-    # todo in the future
     def decodeString(self, s: str) -> str:
-        cursor = 0
-        result = ""
+        stack = []
 
-        while cursor < len(s):
-            str_digit = ""
-            while s[cursor].isnumeric():
-                str_digit += s[cursor]
-                cursor += 1
+        for el in s:
+            if el != "]":
+                stack.append(el)
+            else:
+                str = ""
 
-            digit = int(str_digit)
+                while stack and stack[-1] != "[":
+                    str = stack.pop() + str
 
-            substr = ""
-            if s[cursor] == "[":
-                cursor += 1
+                stack.pop()
 
-                while s[cursor] != "]":
-                    if s[cursor] == "[":
-                        start = cursor
-                        while s[cursor] != "]":
-                            cursor += 1
-                            substr += self.decodeString(s[start + 1 : cursor])
-                    else:
-                        substr += s[cursor]
-                        cursor += 1
+                digit = ""
 
-            cursor += 1
-            result += digit * substr
+                while stack and stack[-1].isdigit():
+                    digit = stack.pop() + digit
 
-        return result
+                stack.append(int(digit) * str)
+
+        return "".join(stack)
 
 
-# print(Solution().decodeString("3[a]2[bc]"))
+print(Solution().decodeString("3[a]2[bc]"))
 print(Solution().decodeString("3[a2[c]]"))
+print(Solution().decodeString("100[leetcode]"))
