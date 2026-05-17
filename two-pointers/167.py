@@ -1,18 +1,17 @@
 def twoSum(numbers: list[int], target: int) -> list[int]:
-    lp = 0
-    rp = len(numbers) - 1
+    left = 0
+    right = len(numbers) - 1
 
-    while lp < rp:
-        res = numbers[lp] + numbers[rp]
-
-        if res > target:
-            rp -= 1
-        elif res < target:
-            lp += 1
+    while left < right:
+        sum_val = numbers[left] + numbers[right]
+        if sum_val > target:
+            right -= 1
+        elif sum_val < target:
+            left += 1
         else:
-            break
+            return [left + 1, right + 1]
 
-    return [lp + 1, rp + 1]
+    return []
 
 
 print(twoSum([2, 7, 11, 15], 9), [1, 2])
