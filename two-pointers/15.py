@@ -4,7 +4,7 @@ class Solution:
         results = []
 
         for i in range(len(nums)):
-            if i > 0 and nums[i] == nums[i - 1]:
+            if i > 0 and nums[i - 1] == nums[i]:
                 continue
 
             target = -1 * nums[i]
@@ -12,12 +12,12 @@ class Solution:
             right = len(nums) - 1
 
             while left < right:
-                curr_sum = nums[left] + nums[right]
+                curr_summ = nums[left] + nums[right]
 
-                if curr_sum < target:
-                    left += 1
-                elif curr_sum > target:
+                if curr_summ > target:
                     right -= 1
+                elif curr_summ < target:
+                    left += 1
                 else:
                     results.append([nums[i], nums[left], nums[right]])
                     left += 1
