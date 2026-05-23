@@ -7,13 +7,6 @@ class Solution:
                 nums[lp], nums[rp] = nums[rp], nums[lp]
                 lp += 1
             rp += 1
-        # p = 0
-
-        # for i in range(len(nums)):
-        #     if nums[i] != 0:
-        #         nums[p], nums[i] = nums[i], nums[p]
-        #         p += 1
-
 
 
 print(Solution().moveZeroes([0, 1, 0, 3, 12]))
