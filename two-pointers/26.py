@@ -1,32 +1,17 @@
-def removeDuplicates(nums: list[int]) -> int:
-    i = 1
+class Solution:
+    def removeDuplicates(self, nums: list[int]) -> int:
+        lp, rp = 0, 1
 
-    tp = 0
-    bp = 1
+        while rp < len(nums):
+            if nums[lp] != nums[rp]:
+                nums[lp + 1] = nums[rp]
+                lp += 1
+            rp += 1
 
-    while tp < len(nums) and bp < len(nums):
-        if nums[tp] == nums[bp]:
-            bp += 1
-        else:
-            nums[i] = nums[bp]
-            i += 1
-            tp = bp
-            bp += 1
-
-    return i
+        return lp + 1
 
 
-def removeDuplicates2(nums: list[int]) -> int:
-    j = 0
-
-    for i in range(len(nums)):
-        if nums[i] != nums[j]:
-            j += 1
-            nums[j] = nums[i]
-
-    return j + 1
-
-
-print(removeDuplicates2([1, 1, 2]))
-print(removeDuplicates2([0, 0, 1, 1, 1, 2, 2, 3, 3, 4]))
-print(removeDuplicates2([1, 1]))
+print(Solution().removeDuplicates([1, 1, 2]))
+print(Solution().removeDuplicates([0, 0, 1, 1, 1, 2, 2, 3, 3, 4]))
+print(Solution().removeDuplicates([1, 1]))
+print(Solution().removeDuplicates([1]))

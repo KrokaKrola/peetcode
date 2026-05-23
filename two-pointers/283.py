@@ -1,26 +1,22 @@
-def moveZeroes(nums: list[int]) -> None:
-    p = 0
+class Solution:
+    def moveZeroes(self, nums: list[int]) -> None:
+        lp, rp = 0, 0
 
-    for i in range(1, len(nums)):
-        if nums[p] != 0:
-            p += 1
-        if nums[p] == 0 and nums[i] != 0:
-            nums[p] = nums[i]
-            nums[i] = 0
-            p += 1
+        while rp < len(nums):
+            if nums[rp] != 0:
+                nums[lp], nums[rp] = nums[rp], nums[lp]
+                lp += 1
+            rp += 1
+        # p = 0
 
-    print(nums)
-
-
-def moveZeroes2(nums: list[int]) -> None:
-    p = 0
-
-    for i in range(len(nums)):
-        if nums[i] != 0:
-            nums[p], nums[i] = nums[i], nums[p]
-            p += 1
+        # for i in range(len(nums)):
+        #     if nums[i] != 0:
+        #         nums[p], nums[i] = nums[i], nums[p]
+        #         p += 1
 
 
-moveZeroes([0, 1, 0, 3, 12])
-# moveZeroes([0])
-# moveZeroes([1, 0, 1])
+
+print(Solution().moveZeroes([0, 1, 0, 3, 12]))
+print(Solution().moveZeroes([0]))
+print(Solution().moveZeroes([1, 0, 1]))
+print(Solution().moveZeroes([2, 1]))
