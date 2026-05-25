@@ -1,26 +1,25 @@
 class Solution:
+    parentheses = {"(": ")", "{": "}", "[": "]"}
+
     def isValid(self, s: str) -> bool:
         stack = []
-        m = {"(": ")", "{": "}", "[": "]"}
 
         for el in s:
-            if el in m:
+            if el in self.parentheses:
                 stack.append(el)
             else:
-                if not stack:
+                if len(stack) == 0 or self.parentheses[stack[-1]] != el:
                     return False
-
-                prev = stack.pop()
-                if m[prev] != el:
-                    return False
+                else:
+                    stack.pop()
 
         return len(stack) == 0
 
 
-print(Solution().isValid("()"))
-print(Solution().isValid("()[]{}"))
-print(Solution().isValid("(]"))
-print(Solution().isValid("([])"))
-print(Solution().isValid("]]"))
-print(Solution().isValid("([)])"))
-print(Solution().isValid("["))
+print(Solution().isValid("()"), True)
+print(Solution().isValid("()[]{}"), True)
+print(Solution().isValid("(]"), False)
+print(Solution().isValid("([])"), True)
+print(Solution().isValid("]]"), False)
+print(Solution().isValid("([)])"), False)
+print(Solution().isValid("["), False)

@@ -1,20 +1,19 @@
 class Solution:
     def calPoints(self, operations: list[str]) -> int:
-        stack = []
+        record = []
 
         for el in operations:
-            if el == "D":
-                new_el = stack[-1] * 2
-                stack.append(new_el)
-            elif el == "C":
-                stack.pop()
+            if el == "C":
+                record.pop()
+            elif el == "D":
+                record.append(record[-1] * 2)
             elif el == "+":
-                new_el = stack[-1] + stack[-2]
-                stack.append(new_el)
+                first, second = record[-1], record[-2]
+                record.append(first + second)
             else:
-                stack.append(int(el))
+                record.append(int(el))
 
-        return sum(stack)
+        return sum(record)
 
 
 print(Solution().calPoints(["5", "2", "C", "D", "+"]))
