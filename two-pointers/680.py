@@ -13,7 +13,6 @@ class Solution:
 
     def validPalindrome(self, s: str) -> bool:
         lp, rp = 0, len(s) - 1
-
         while lp < rp:
             if s[lp] != s[rp]:
                 return self.isPalindrom(s[lp:rp]) or self.isPalindrom(
