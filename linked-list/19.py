@@ -2,7 +2,7 @@ from typing import Optional
 
 
 class ListNode:
-    def __init__(self, val=0, next=None):
+    def __init__(self, val: int = 0, next: Optional["ListNode"] = None) -> None:
         self.val = val
         self.next = next
 
@@ -36,11 +36,11 @@ class Solution:
         fast = head
 
         for _ in range(n):
-            fast = fast.next
+            fast = fast.next if fast is not None else None
 
         while fast:
             fast = fast.next
-            slow = slow.next
+            slow = slow.next if slow is not None else None
 
         slow.next = slow.next.next
 
