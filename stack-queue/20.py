@@ -1,7 +1,7 @@
 class Solution:
     parentheses = {"(": ")", "{": "}", "[": "]"}
 
-    def isValid(self, s: str) -> bool:
+    def is_valid(self, s: str) -> bool:
         stack = []
 
         for el in s:
@@ -16,10 +16,10 @@ class Solution:
         return len(stack) == 0
 
 
-print(Solution().isValid("()"), True)
-print(Solution().isValid("()[]{}"), True)
-print(Solution().isValid("(]"), False)
-print(Solution().isValid("([])"), True)
-print(Solution().isValid("]]"), False)
-print(Solution().isValid("([)])"), False)
-print(Solution().isValid("["), False)
+print(Solution().is_valid("()"), True)
+print(Solution().is_valid("()[]{}"), True)
+print(Solution().is_valid("(]"), False)
+print(Solution().is_valid("([])"), True)
+print(Solution().is_valid("]]"), False)
+print(Solution().is_valid("([)])"), False)
+print(Solution().is_valid("["), False)

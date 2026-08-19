@@ -1,31 +1,32 @@
 class Solution:
-    def isPalindrom(self, s: str) -> bool:
-        lp, rp = 0, len(s) - 1
+    def isPalindrome(self, s: str) -> bool:
+        l, r = 0, len(s) - 1
 
-        while lp < rp:
-            if s[lp] == s[rp]:
-                lp += 1
-                rp -= 1
-            else:
+        while l < r:
+            if s[l] != s[r]:
                 return False
+
+            r -= 1
+            l += 1
 
         return True
 
     def validPalindrome(self, s: str) -> bool:
-        lp, rp = 0, len(s) - 1
-        while lp < rp:
-            if s[lp] != s[rp]:
-                return self.isPalindrom(s[lp:rp]) or self.isPalindrom(
-                    s[lp + 1 : rp + 1]
+        left, right = 0, len(s) - 1
+
+        while left < right:
+            if s[left] != s[right]:
+                return self.isPalindrome(s[left:right]) or self.isPalindrome(
+                    s[left + 1 : right + 1]
                 )
 
-            lp += 1
-            rp -= 1
+            left += 1
+            right -= 1
 
         return True
 
 
-# print(Solution().validPalindrome("aba"))
-# print(Solution().validPalindrome("abca"))
-# print(Solution().validPalindrome("abc"))
-print(Solution().validPalindrome("cbbcc"))
+print(Solution().validPalindrome("aba"), True)
+print(Solution().validPalindrome("abca"), True)
+print(Solution().validPalindrome("abc"), False)
+print(Solution().validPalindrome("cbbcc"), True)

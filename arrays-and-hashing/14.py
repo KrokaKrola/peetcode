@@ -1,30 +1,39 @@
 class Solution:
     def longestCommonPrefix(self, strs: list[str]) -> str:
+        smallest_str_len = 200
         smallest_str_idx = 0
-        size = 200
 
-        for idx in range(0, len(strs)):
-            el = strs[idx]
+        for i, str in enumerate(strs):
+          if len(str) < smallest_str_len:
+            smallest_str_idx = i
+            smallest_str_len = len(str)
 
-            if size > len(el):
-                size = len(el)
-                smallest_str_idx = idx
-
+        prefix_len = 0
         smallest_str = strs[smallest_str_idx]
 
-        for ch_idx in range(0, len(smallest_str)):
-            is_common = True
-            for curr_str in strs:
-                if curr_str[ch_idx] != smallest_str[ch_idx]:
-                    is_common = False
-                    break
+        for i in range(len(smallest_str)):
+            for str in strs:
+              if str[i] != smallest_str[i]:
+                return strs[smallest_str_idx][0:prefix_len]
 
-            if not is_common:
-                return smallest_str[:ch_idx]
+            prefix_len = prefix_len + 1
 
-        return smallest_str
+        return strs[smallest_str_idx][0:prefix_len]
+
+    def longestCommonPrefix2(self, strs: list[str]) -> str:
+      res = ""
+
+      for i in range(len(strs[0])):
+        for s in strs:
+          if i == len(s) or s[i] != strs[0][i]:
+            return res
+
+        res += strs[0][i]
+
+      return res
 
 
-print(Solution().longestCommonPrefix(["flower", "flow", "flight"]))
-print(Solution().longestCommonPrefix(["dog", "racecar", "car"]))
-print(Solution().longestCommonPrefix(["ab", "a"]))
+
+print(Solution().longestCommonPrefix2(["flower", "flow", "flight"]))
+print(Solution().longestCommonPrefix2(["dog", "racecar", "car"]))
+print(Solution().longestCommonPrefix2(["ab", "a"]))
