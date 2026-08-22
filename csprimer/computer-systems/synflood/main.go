@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path"
 	"slices"
 	"strings"
 )
@@ -50,10 +51,18 @@ const (
 // *.pcap file structure
 // [ 24 bytes of header ] . [ 16 bytes of first packet header ] . [ inclLen of bytes of first packet ] ... [ 16 bytes of the n packet header ] . [ inclLen of bytes of n packet ]
 func main() {
-	data, err := os.ReadFile("./synflood.pcap")
+	wd, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+
+	logPath := path.Join(wd, "csprimer", "computer-systems", "synflood", "synflood.pcap")
+	data, err := os.ReadFile(logPath)
 	if err != nil {
 		panic(err.Error())
 	}
+
+	// reader := bytes.NewReader(data)
 
 	magicNumber := data[:4]
 	byteOrder := ""
