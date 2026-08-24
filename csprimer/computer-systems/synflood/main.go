@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
+	"io"
 	"os"
 	"path"
 	"slices"
@@ -40,13 +42,27 @@ func ip(value []byte) string {
 }
 
 const (
-	PACKET_HEADER_OFFSET = 4
-	PROTOCOL_POSITION    = 9
-	SYN                  = 0x02
-	ACK                  = 0x10
-	TCP_FLAGS_OFFSET     = 13
-	TCP_PROTOCOL         = 0x06
+	PROTOCOL_POSITION = 9
+	SYN               = 0x02
+	ACK               = 0x10
+	TCP_FLAGS_OFFSET  = 13
+	TCP_PROTOCOL      = 0x06
 )
+
+func read(r io.Reader, n int) []byte {
+	value := make([]byte, n)
+	if _, err := r.Read(value); err != nil {
+		panic("error trying to read value")
+	}
+
+	return value
+}
+
+func skip(r io.Seeker, n int64, whence int) {
+	if _, err := r.Seek(n, whence); err != nil {
+		panic("error trying to skip value")
+	}
+}
 
 // *.pcap file structure
 // [ 24 bytes of header ] . [ 16 bytes of first packet header ] . [ inclLen of bytes of first packet ] ... [ 16 bytes of the n packet header ] . [ inclLen of bytes of n packet ]
@@ -56,15 +72,16 @@ func main() {
 		panic(err)
 	}
 
-	logPath := path.Join(wd, "csprimer", "computer-systems", "synflood", "synflood.pcap")
+	// logPath := path.Join(wd, "csprimer", "computer-systems", "synflood", "synflood.pcap")
+	logPath := path.Join(wd, "synflood.pcap")
 	data, err := os.ReadFile(logPath)
 	if err != nil {
 		panic(err.Error())
 	}
 
-	// reader := bytes.NewReader(data)
+	reader := bytes.NewReader(data)
 
-	magicNumber := data[:4]
+	magicNumber := read(reader, 4)
 	byteOrder := ""
 
 	if slices.Equal(magicNumber, []byte{0xD4, 0xC3, 0xB2, 0xA1}) {
@@ -77,60 +94,73 @@ func main() {
 
 	fmt.Printf("Byte order: %s\n", byteOrder)
 
-	if linkType := le(data[20:24]); linkType != 0 {
+	skip(reader, 20, io.SeekStart)
+
+	linkType := read(reader, 4)
+
+	if linkType := le(linkType); linkType != 0 {
 		panic("unsupported link type")
 	}
 
-	packetHeaderSize := 16
-	offset := 24
 	count := 0
 	initiated := 0
 	acknowleged := 0
 
-	for offset < len(data) {
-		if offset+packetHeaderSize > len(data) {
-			panic("invalid structure of the packet header")
+	for reader.Len() > 0 {
+		packetHeader := make([]byte, 16)
+		if _, err := reader.Read(packetHeader); err != nil {
+			panic("error trying to read packet header")
 		}
 
-		packetHeader := data[offset : offset+packetHeaderSize]
 		inclLen := le(packetHeader[8:12])
+		bodyStart, err := reader.Seek(0, io.SeekCurrent)
+		if err != nil {
+			panic("error trying to read packet header")
+		}
 
-		packet := data[offset+packetHeaderSize : offset+packetHeaderSize+inclLen]
-		loopbackHeader := le(packet[:PACKET_HEADER_OFFSET])
-
-		if loopbackHeader != 2 {
+		loopbackHeader := read(reader, 4)
+		if le(loopbackHeader) != 2 {
 			panic("unsupported address family. only ipv4 is supported")
 		}
 
-		ihl := packet[PACKET_HEADER_OFFSET] & 0x0F
-		tcpStart := PACKET_HEADER_OFFSET + ihl*4
+		skip(reader, 9, io.SeekCurrent)
 
-		if protocol := packet[PROTOCOL_POSITION+PACKET_HEADER_OFFSET]; protocol != TCP_PROTOCOL {
+		protocol := read(reader, 1)
+		if protocol[0] != TCP_PROTOCOL {
 			panic("uknown protocol")
 		}
 
-		const SOURCE_IP_POSITION = 12
-		const DEST_IP_POSITION = 16
-		sourceIp := ip(packet[PACKET_HEADER_OFFSET+SOURCE_IP_POSITION : PACKET_HEADER_OFFSET+SOURCE_IP_POSITION+4])
-		destIp := ip(packet[PACKET_HEADER_OFFSET+DEST_IP_POSITION : PACKET_HEADER_OFFSET+DEST_IP_POSITION+4])
+		skip(reader, 2, io.SeekCurrent)
 
-		fmt.Println("sourceIp", sourceIp, "destIp", destIp)
+		ips := read(reader, 8)
+		sourceIp := ip(ips[:4])
+		destIp := ip(ips[4:])
+		sourcePort := read(reader, 2)
+		destPort := read(reader, 2)
 
-		tcpFlags := packet[tcpStart+TCP_FLAGS_OFFSET]
+		skip(reader, 9, io.SeekCurrent)
 
-		isSyn := tcpFlags&SYN != 0
-		isAck := tcpFlags&ACK != 0
+		tcpFlags := read(reader, 1)
+		isSyn := tcpFlags[0]&SYN != 0
+		isAck := tcpFlags[0]&ACK != 0
 
-		if tcpFlags != 0 && isSyn && !isAck {
+		if isSyn && !isAck {
 			initiated++
 		}
 
-		if tcpFlags != 0 && isSyn && isAck {
+		if isSyn && isAck {
 			acknowleged++
 		}
 
-		offset += packetHeaderSize
-		offset += inclLen
+		if _, err := reader.Seek(bodyStart+int64(inclLen), io.SeekStart); err != nil {
+			panic("error reading ip header")
+		}
+
+		if isSyn && isAck {
+			fmt.Printf("%s:%d -> %s:%d SYN&ACK\n", sourceIp, be(sourcePort), destIp, be(destPort))
+		} else if isSyn && !isAck {
+			fmt.Printf("%s:%d -> %s:%d SYN\n", sourceIp, be(sourcePort), destIp, be(destPort))
+		}
 
 		// total packets count
 		count += 1
